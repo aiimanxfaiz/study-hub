@@ -34,7 +34,7 @@ export function MaterialPage() {
       <TopBar
         crumbs={[
           { label: 'Home', to: '/' },
-          { label: match.subjectCode, to: `/subject/${match.subjectId}` },
+          { label: `${match.subjectCode} - ${match.subjectName}`, to: `/subject/${match.subjectId}` },
           { label: CATEGORY_LABELS[match.categoryType], to: `/subject/${match.subjectId}/${match.categoryType}` },
           { label: match.item.title },
         ]}
@@ -43,7 +43,7 @@ export function MaterialPage() {
       <section className="surface">
         <h2>{match.item.title}</h2>
         <p>
-          {match.subjectCode} · {CATEGORY_LABELS[match.categoryType]}
+          {match.subjectCode} - {match.subjectName} · {CATEGORY_LABELS[match.categoryType]}
           {match.item.termDateLabel ? ` · ${match.item.termDateLabel}` : ''}
         </p>
         <p>Source: {match.item.sourceHtml ?? 'Unknown source'}</p>

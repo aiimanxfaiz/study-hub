@@ -43,7 +43,7 @@ export function HomePage() {
             <option value="">All subjects</option>
             {subjects.map((subject) => (
               <option key={subject.id} value={subject.id}>
-                {subject.code}
+                {subject.code} - {subject.name}
               </option>
             ))}
           </select>
@@ -109,7 +109,7 @@ export function HomePage() {
             {search.results.slice(0, 120).map((result) => (
               <li key={result.item.id}>
                 <Link to={`/material/${result.item.id}`}>
-                  <strong>{result.item.title}</strong> · {result.subjectCode} · {CATEGORY_LABELS[result.categoryType]}
+                  <strong>{result.item.title}</strong> · {result.subjectCode} - {result.subjectName} · {CATEGORY_LABELS[result.categoryType]}
                   {result.item.termDateLabel ? ` · ${result.item.termDateLabel}` : ''}
                 </Link>
               </li>

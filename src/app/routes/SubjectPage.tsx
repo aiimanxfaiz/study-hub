@@ -30,10 +30,11 @@ export function SubjectPage() {
 
   return (
     <main className="page-shell">
-      <TopBar crumbs={[{ label: 'Home', to: '/' }, { label: subject.code }]} />
+      <TopBar crumbs={[{ label: 'Home', to: '/' }, { label: `${subject.code} - ${subject.name}` }]} />
       <section className="surface">
-        <h2>{subject.code}</h2>
-        <p>{subject.name}</p>
+        <h2>
+          {subject.code} - {subject.name}
+        </h2>
         <div className="cards-grid">
           {subject.categories.map((category) => (
             <article className="subject-card" key={category.type}>

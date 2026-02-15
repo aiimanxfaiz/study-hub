@@ -33,11 +33,14 @@ export function CategoryPage() {
       <TopBar
         crumbs={[
           { label: 'Home', to: '/' },
-          { label: subject.code, to: `/subject/${subject.id}` },
+          { label: `${subject.code} - ${subject.name}`, to: `/subject/${subject.id}` },
           { label: category ? CATEGORY_LABELS[category.type] : 'Not found' },
         ]}
       />
       <section className="surface">
+        <p>
+          {subject.code} - {subject.name}
+        </p>
         <h2>{category ? CATEGORY_LABELS[category.type] : 'Category not found'}</h2>
         {!category || category.items.length === 0 ? (
           <p className="state-text">No material found.</p>
