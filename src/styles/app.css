@@ -331,6 +331,12 @@ select:focus-visible {
   padding: 0 1rem;
   pointer-events: none;
   z-index: 20;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.fullscreen-nav.hidden {
+  opacity: 0;
 }
 
 .fullscreen-nav-btn {
@@ -418,8 +424,23 @@ select:focus-visible {
     overflow-y: hidden;
   }
 
-  .fullscreen-nav-btn {
-    min-width: 120px;
-    min-height: 54px;
+  .viewer-main:fullscreen .fullscreen-nav {
+    inset: auto 0 0 0;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0 0 calc(env(safe-area-inset-bottom) + 0.75rem);
+    align-items: flex-end;
+  }
+
+  .viewer-main:fullscreen .fullscreen-nav-btn {
+    min-width: 52px;
+    min-height: 52px;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    font-size: 1.6rem;
+    line-height: 1;
+    padding: 0;
+    background: color-mix(in srgb, var(--surface), transparent 38%);
   }
 }

@@ -16,8 +16,15 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
   const [missing, setMissing] = useState<Record<string, boolean>>({})
   const [loaded, setLoaded] = useState<Record<string, boolean>>({})
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(max-width: 960px)').matches
+      : false,
+  )
+  const [showFullscreenNav, setShowFullscreenNav] = useState(true)
   const frameRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<ReactZoomPanPinchRef | null>(null)
+  const navHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const dragScrollRef = useRef<{
     active: boolean
     pointerId: number
@@ -78,11 +85,35 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
   }, [images.length])
 
   useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return
+
+    const media = window.matchMedia('(max-width: 960px)')
+    const onChange = (event: MediaQueryListEvent) => setIsMobileViewport(event.matches)
+    setIsMobileViewport(media.matches)
+    media.addEventListener('change', onChange)
+    return () => media.removeEventListener('change', onChange)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (navHideTimerRef.current) {
+        clearTimeout(navHideTimerRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     const onFullscreenChange = () => {
       const active = document.fullscreenElement === frameRef.current
       setIsFullscreen(active)
       if (active) {
         frameRef.current?.focus()
+      }
+      if (!active) {
+        setShowFullscreenNav(true)
+        if (navHideTimerRef.current) {
+          clearTimeout(navHideTimerRef.current)
+        }
       }
     }
 
@@ -129,11 +160,31 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     frameRef.current.requestFullscreen().catch(() => undefined)
   }
 
-  if (images.length === 0) {
-    return <p className="state-text">No images in this material.</p>
+  function showNavTemporarily() {
+    if (!(isFullscreen && !continuous)) return
+    setShowFullscreenNav(true)
+
+    if (!isMobileViewport) return
+
+    if (navHideTimerRef.current) {
+      clearTimeout(navHideTimerRef.current)
+    }
+    navHideTimerRef.current = setTimeout(() => {
+      setShowFullscreenNav(false)
+    }, 1600)
   }
 
+  useEffect(() => {
+    if (isFullscreen && !continuous) {
+      showNavTemporarily()
+      return
+    }
+    setShowFullscreenNav(true)
+  }, [isFullscreen, continuous, isMobileViewport, pageIndex])
+
   function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    showNavTemporarily()
+
     if (event.pointerType !== 'mouse' || event.button !== 0) return
     if (!(isFullscreen || continuous)) return
 
@@ -165,6 +216,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     const dy = event.clientY - state.startY
     frame.scrollLeft = state.startScrollLeft - dx
     frame.scrollTop = state.startScrollTop - dy
+    showNavTemporarily()
     event.preventDefault()
   }
 
@@ -178,6 +230,10 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     if (frame.hasPointerCapture(event.pointerId)) {
       frame.releasePointerCapture(event.pointerId)
     }
+  }
+
+  if (images.length === 0) {
+    return <p className="state-text">No images in this material.</p>
   }
 
   return (
@@ -227,6 +283,8 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         onPointerMove={onPointerMove}
         onPointerUp={endPointerDrag}
         onPointerCancel={endPointerDrag}
+        onTouchStart={() => showNavTemporarily()}
+        onClick={() => showNavTemporarily()}
       >
         {continuous ? (
           <div className="continuous-list">
@@ -299,14 +357,14 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         ) : null}
 
         {isFullscreen && !continuous ? (
-          <div className="fullscreen-nav" aria-label="Fullscreen page navigation">
+          <div className={`fullscreen-nav ${isMobileViewport && !showFullscreenNav ? 'hidden' : ''}`} aria-label="Fullscreen page navigation">
             <button
               type="button"
               className="ghost-btn fullscreen-nav-btn fullscreen-nav-btn-left"
               onClick={() => setPageIndex((prev) => Math.max(prev - 1, 0))}
               aria-label="Previous page"
             >
-              Prev
+              {isMobileViewport ? '‹' : 'Prev'}
             </button>
             <button
               type="button"
@@ -314,7 +372,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
               onClick={() => setPageIndex((prev) => Math.min(prev + 1, images.length - 1))}
               aria-label="Next page"
             >
-              Next
+              {isMobileViewport ? '›' : 'Next'}
             </button>
           </div>
         ) : null}
