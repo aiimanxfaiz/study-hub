@@ -228,8 +228,16 @@ async function resolveSubjectName(subjectCode) {
 
   const html = await fs.readFile(subjectHtml, 'utf8')
   const $ = load(html)
+  const configured = cleanText($('#header-config').attr('data-title') || '')
+  if (configured) return configured
+
   const title = cleanText($('title').first().text())
-  return title || subjectCode
+  if (title) return title
+
+  const menuText = cleanText($('#header-config').attr('data-menu-links') || '')
+  if (menuText) return menuText
+
+  return subjectCode
 }
 
 function buildItem({ subjectCode, sourceHtml, title, termDateLabel, images, textBlocks, tags }) {

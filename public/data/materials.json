@@ -3,7 +3,7 @@
     {
       "id": "math-1",
       "code": "Math 1",
-      "name": "PMT 0101",
+      "name": "Mathematics 1",
       "categories": [
         {
           "type": "lecture",
@@ -3497,7 +3497,7 @@
     {
       "id": "math-2",
       "code": "Math 2",
-      "name": "PMT 0201",
+      "name": "Mathematics 2",
       "categories": [
         {
           "type": "lecture",
@@ -6155,7 +6155,7 @@
     {
       "id": "math-3",
       "code": "Math 3",
-      "name": "PMT 0301",
+      "name": "Mathematics 3",
       "categories": [
         {
           "type": "lecture",
@@ -10150,7 +10150,7 @@
     {
       "id": "tcp-2101",
       "code": "TCP 2101",
-      "name": "TCP 2101",
+      "name": "Algorithm Design And Analysis",
       "categories": [
         {
           "type": "exam",
@@ -10488,7 +10488,7 @@
     {
       "id": "tcs-3351",
       "code": "TCS 3351",
-      "name": "TCS 3351",
+      "name": "Cryptography & Data Security",
       "categories": [
         {
           "type": "lecture",
@@ -10826,7 +10826,7 @@
     {
       "id": "tds-2201",
       "code": "TDS 2201",
-      "name": "TDS 2201",
+      "name": "Statistical Data Analysis",
       "categories": [
         {
           "type": "exam",
@@ -11562,7 +11562,7 @@
     {
       "id": "tds-3301",
       "code": "TDS 3301",
-      "name": "TDS 3301",
+      "name": "Data Mining",
       "categories": [
         {
           "type": "lecture",
@@ -11988,7 +11988,7 @@
     {
       "id": "tds-3851",
       "code": "TDS 3851",
-      "name": "TDS 3851",
+      "name": "Machine Learning",
       "categories": [
         {
           "type": "lecture",
@@ -12453,7 +12453,7 @@
     {
       "id": "tma-1101",
       "code": "TMA 1101",
-      "name": "TMA 1101",
+      "name": "Calculus",
       "categories": [
         {
           "type": "lecture",
@@ -13715,7 +13715,7 @@
     {
       "id": "tma-1201",
       "code": "TMA 1201",
-      "name": "TMA 1201",
+      "name": "Discrete Structures and Probability",
       "categories": [
         {
           "type": "lecture",
@@ -14838,7 +14838,7 @@
     {
       "id": "tma-1301",
       "code": "TMA 1301",
-      "name": "TMA 1301",
+      "name": "Computational Methods",
       "categories": [
         {
           "type": "lecture",
@@ -16050,7 +16050,7 @@
     {
       "id": "tse-2101",
       "code": "TSE 2101",
-      "name": "TSE 2101",
+      "name": "Software Engineering Fundamentals",
       "categories": [
         {
           "type": "lecture",
@@ -16532,7 +16532,7 @@
     {
       "id": "tsn-1101",
       "code": "TSN 1101",
-      "name": "TSN 1101",
+      "name": "Computer Architecture & Organization",
       "categories": [
         {
           "type": "lecture",
@@ -17555,7 +17555,7 @@
     {
       "id": "tsn-2101",
       "code": "TSN 2101",
-      "name": "TSN 2101",
+      "name": "Operating Systems",
       "categories": [
         {
           "type": "lecture",
@@ -18777,7 +18777,7 @@
     {
       "id": "tsn-2201",
       "code": "TSN 2201",
-      "name": "TSN 2201",
+      "name": "Computer Networks",
       "categories": [
         {
           "type": "test",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T05:39:19.619Z",
+  "generatedAt": "2026-02-15T06:02:55.153Z",
   "subjectCount": 17,
   "materialCount": 301,
   "imageCount": 3097,
@@ -7,7 +7,7 @@
     {
       "id": "math-1",
       "code": "Math 1",
-      "name": "PMT 0101",
+      "name": "Mathematics 1",
       "counts": {
         "lecture": 24,
         "notes": 6,
@@ -17,7 +17,7 @@
     {
       "id": "math-2",
       "code": "Math 2",
-      "name": "PMT 0201",
+      "name": "Mathematics 2",
       "counts": {
         "lecture": 16,
         "tutorial": 5,
@@ -28,7 +28,7 @@
     {
       "id": "math-3",
       "code": "Math 3",
-      "name": "PMT 0301",
+      "name": "Mathematics 3",
       "counts": {
         "lecture": 6,
         "notes": 6,
@@ -56,7 +56,7 @@
     {
       "id": "tcp-2101",
       "code": "TCP 2101",
-      "name": "TCP 2101",
+      "name": "Algorithm Design And Analysis",
       "counts": {
         "exam": 10
       }
@@ -64,7 +64,7 @@
     {
       "id": "tcs-3351",
       "code": "TCS 3351",
-      "name": "TCS 3351",
+      "name": "Cryptography & Data Security",
       "counts": {
         "lecture": 9
       }
@@ -72,7 +72,7 @@
     {
       "id": "tds-2201",
       "code": "TDS 2201",
-      "name": "TDS 2201",
+      "name": "Statistical Data Analysis",
       "counts": {
         "exam": 6,
         "notes": 1,
@@ -82,7 +82,7 @@
     {
       "id": "tds-3301",
       "code": "TDS 3301",
-      "name": "TDS 3301",
+      "name": "Data Mining",
       "counts": {
         "lecture": 3,
         "exam": 7
@@ -91,7 +91,7 @@
     {
       "id": "tds-3851",
       "code": "TDS 3851",
-      "name": "TDS 3851",
+      "name": "Machine Learning",
       "counts": {
         "lecture": 4,
         "test": 2,
@@ -102,7 +102,7 @@
     {
       "id": "tma-1101",
       "code": "TMA 1101",
-      "name": "TMA 1101",
+      "name": "Calculus",
       "counts": {
         "lecture": 9,
         "exam": 12,
@@ -112,7 +112,7 @@
     {
       "id": "tma-1201",
       "code": "TMA 1201",
-      "name": "TMA 1201",
+      "name": "Discrete Structures and Probability",
       "counts": {
         "lecture": 9,
         "exam": 14,
@@ -122,7 +122,7 @@
     {
       "id": "tma-1301",
       "code": "TMA 1301",
-      "name": "TMA 1301",
+      "name": "Computational Methods",
       "counts": {
         "lecture": 6,
         "exam": 8,
@@ -132,7 +132,7 @@
     {
       "id": "tse-2101",
       "code": "TSE 2101",
-      "name": "TSE 2101",
+      "name": "Software Engineering Fundamentals",
       "counts": {
         "lecture": 6,
         "exam": 8
@@ -141,7 +141,7 @@
     {
       "id": "tsn-1101",
       "code": "TSN 1101",
-      "name": "TSN 1101",
+      "name": "Computer Architecture & Organization",
       "counts": {
         "lecture": 7,
         "exam": 11
@@ -150,7 +150,7 @@
     {
       "id": "tsn-2101",
       "code": "TSN 2101",
-      "name": "TSN 2101",
+      "name": "Operating Systems",
       "counts": {
         "lecture": 10,
         "test": 12,
@@ -161,7 +161,7 @@
     {
       "id": "tsn-2201",
       "code": "TSN 2201",
-      "name": "TSN 2201",
+      "name": "Computer Networks",
       "counts": {
         "test": 4,
         "exam": 14
