@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type TouchEvent as ReactTouchEvent } from 'react'
 import { TransformComponent, TransformWrapper, type ReactZoomPanPinchRef } from 'react-zoom-pan-pinch'
 import type { MaterialImage } from '../../types/materials'
 
@@ -18,6 +18,22 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const frameRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<ReactZoomPanPinchRef | null>(null)
+  const dragScrollRef = useRef<{
+    active: boolean
+    pointerId: number
+    startX: number
+    startY: number
+    startScrollLeft: number
+    startScrollTop: number
+  }>({
+    active: false,
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    startScrollLeft: 0,
+    startScrollTop: 0,
+  })
+  const touchSwipeRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
 
   const image = images[pageIndex]
 
@@ -118,6 +134,76 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     return <p className="state-text">No images in this material.</p>
   }
 
+  function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return
+    if (!(isFullscreen || continuous)) return
+
+    const target = event.target as HTMLElement
+    if (target.closest('button, input, a, label')) return
+    if (!continuous && target.closest('.react-transform-wrapper, .react-transform-component')) return
+
+    const frame = frameRef.current
+    if (!frame) return
+
+    dragScrollRef.current = {
+      active: true,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startScrollLeft: frame.scrollLeft,
+      startScrollTop: frame.scrollTop,
+    }
+    frame.classList.add('dragging')
+    frame.setPointerCapture(event.pointerId)
+  }
+
+  function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const frame = frameRef.current
+    const state = dragScrollRef.current
+    if (!frame || !state.active || state.pointerId !== event.pointerId) return
+
+    const dx = event.clientX - state.startX
+    const dy = event.clientY - state.startY
+    frame.scrollLeft = state.startScrollLeft - dx
+    frame.scrollTop = state.startScrollTop - dy
+    event.preventDefault()
+  }
+
+  function endPointerDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    const frame = frameRef.current
+    const state = dragScrollRef.current
+    if (!frame || !state.active || state.pointerId !== event.pointerId) return
+
+    dragScrollRef.current.active = false
+    frame.classList.remove('dragging')
+    if (frame.hasPointerCapture(event.pointerId)) {
+      frame.releasePointerCapture(event.pointerId)
+    }
+  }
+
+  function onTouchStartCapture(event: ReactTouchEvent<HTMLDivElement>) {
+    if (continuous) return
+    const touch = event.touches[0]
+    if (!touch) return
+    touchSwipeRef.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  function onTouchEndCapture(event: ReactTouchEvent<HTMLDivElement>) {
+    if (continuous) return
+    const touch = event.changedTouches[0]
+    if (!touch) return
+
+    const dx = touch.clientX - touchSwipeRef.current.x
+    const dy = touch.clientY - touchSwipeRef.current.y
+    if (Math.abs(dx) < 50 || Math.abs(dx) <= Math.abs(dy)) return
+
+    if (dx < 0) {
+      setPageIndex((prev) => Math.min(prev + 1, images.length - 1))
+    } else {
+      setPageIndex((prev) => Math.max(prev - 1, 0))
+    }
+  }
+
   return (
     <section className="viewer-shell" aria-label="Material image viewer">
       <div className="viewer-toolbar" role="toolbar" aria-label="Viewer controls">
@@ -157,7 +243,17 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         </span>
       </div>
 
-      <div className={`viewer-main ${continuous ? 'continuous-active' : ''}`} ref={frameRef} tabIndex={-1}>
+      <div
+        className={`viewer-main ${continuous ? 'continuous-active' : ''}`}
+        ref={frameRef}
+        tabIndex={-1}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endPointerDrag}
+        onPointerCancel={endPointerDrag}
+        onTouchStartCapture={onTouchStartCapture}
+        onTouchEndCapture={onTouchEndCapture}
+      >
         {continuous ? (
           <div className="continuous-list">
             {images.map((entry) => {
@@ -227,9 +323,32 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
             ))}
           </aside>
         ) : null}
+
+        {isFullscreen && !continuous ? (
+          <div className="fullscreen-nav" aria-label="Fullscreen page navigation">
+            <button
+              type="button"
+              className="ghost-btn fullscreen-nav-btn"
+              onClick={() => setPageIndex((prev) => Math.max(prev - 1, 0))}
+              aria-label="Previous page"
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              className="ghost-btn fullscreen-nav-btn"
+              onClick={() => setPageIndex((prev) => Math.min(prev + 1, images.length - 1))}
+              aria-label="Next page"
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
       </div>
 
-      <p className="kbd-help">Keyboard: ← → navigate, +/- zoom, 0 reset, f fullscreen, esc exit. Zoom wheel: hold Ctrl + wheel.</p>
+      <p className="kbd-help">
+        Keyboard: ← → navigate, +/- zoom, 0 reset, f fullscreen, esc exit. Zoom wheel: hold Ctrl + wheel. Mobile: swipe left/right for next/prev.
+      </p>
     </section>
   )
 }
