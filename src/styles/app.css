@@ -324,21 +324,23 @@ select:focus-visible {
 
 .fullscreen-nav {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 1rem;
+  inset: 0;
   display: flex;
-  justify-content: center;
-  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
   pointer-events: none;
   z-index: 20;
 }
 
 .fullscreen-nav-btn {
-  min-width: 88px;
+  min-width: 110px;
+  min-height: 48px;
   background: color-mix(in srgb, var(--surface), transparent 25%);
   backdrop-filter: blur(6px);
   pointer-events: auto;
+  border-radius: 999px;
+  font-weight: 800;
 }
 
 .continuous-list {
@@ -417,7 +419,7 @@ select:focus-visible {
   }
 
   .fullscreen-nav-btn {
-    min-width: 110px;
-    min-height: 44px;
+    min-width: 120px;
+    min-height: 54px;
   }
 }
