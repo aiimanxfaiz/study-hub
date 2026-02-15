@@ -25,6 +25,7 @@ It ingests the existing repository's subject files, normalizes them into JSON, a
 ```bash
 npm install
 npm run ingest
+npm run sync:assets
 npm run dev
 ```
 
@@ -38,6 +39,7 @@ npm run build
 ## Data Ingestion
 
 `npm run ingest` runs `scripts/ingest-materials.mjs`.
+`npm run sync:assets` copies referenced images into `public/materials/` for static hosting.
 
 It parses the parent repository folders/files and classifies materials by keywords:
 

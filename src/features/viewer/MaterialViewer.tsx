@@ -71,6 +71,14 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     return { width: 'auto', maxWidth: '100%', height: 'auto', maxHeight: '75vh' }
   }, [fitMode])
 
+  function toAssetUrl(src: string) {
+    const encodedPath = src
+      .split('/')
+      .map((segment) => encodeURIComponent(segment))
+      .join('/')
+    return `./materials/${encodedPath}`
+  }
+
   function toggleFullscreen() {
     if (!frameRef.current) return
     if (document.fullscreenElement) {
@@ -135,7 +143,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
                   <figcaption>{entry.alt}</figcaption>
                   {!isLoaded && !isMissing ? <div className="image-skeleton" aria-hidden="true" /> : null}
                   <img
-                    src={`../${entry.src}`}
+                    src={toAssetUrl(entry.src)}
                     alt={entry.alt}
                     loading="lazy"
                     onError={() => setMissing((prev) => ({ ...prev, [entry.src]: true }))}
@@ -158,7 +166,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
                 {!loaded[image.src] && !missing[image.src] ? <div className="image-skeleton" aria-hidden="true" /> : null}
                 <img
                   key={image.src}
-                  src={`../${image.src}`}
+                  src={toAssetUrl(image.src)}
                   alt={image.alt}
                   loading="lazy"
                   onError={() => setMissing((prev) => ({ ...prev, [image.src]: true }))}
@@ -179,7 +187,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
               type="button"
               onClick={() => setPageIndex(idx)}
             >
-              <img src={`../${thumb.src}`} alt={`Page ${idx + 1}`} loading="lazy" />
+              <img src={toAssetUrl(thumb.src)} alt={`Page ${idx + 1}`} loading="lazy" />
               <span>{idx + 1}</span>
             </button>
           ))}

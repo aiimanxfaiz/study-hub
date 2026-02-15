@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "ingest": "node scripts/ingest-materials.mjs",
+    "sync:assets": "node scripts/sync-material-assets.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
