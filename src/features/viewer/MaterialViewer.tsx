@@ -61,6 +61,17 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [images.length])
 
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      if (document.fullscreenElement === frameRef.current) {
+        frameRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [])
+
   const fitStyle = useMemo(() => {
     if (fitMode === 'width') {
       return { width: '100%', height: 'auto' }
@@ -131,7 +142,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         </span>
       </div>
 
-      <div className="viewer-main" ref={frameRef}>
+      <div className="viewer-main" ref={frameRef} tabIndex={-1}>
         {continuous ? (
           <div className="continuous-list">
             {images.map((entry) => {
@@ -156,7 +167,14 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
             })}
           </div>
         ) : (
-          <TransformWrapper minScale={0.5} maxScale={5} initialScale={1} centerOnInit ref={wrapperRef}>
+          <TransformWrapper
+            minScale={0.5}
+            maxScale={5}
+            initialScale={1}
+            centerOnInit
+            ref={wrapperRef}
+            wheel={{ activationKeys: ['Control'] }}
+          >
             <TransformComponent
               wrapperStyle={{ width: '100%', minHeight: '70vh' }}
               contentStyle={{ width: '100%', display: 'flex', justifyContent: 'center' }}
@@ -194,7 +212,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         </aside>
       </div>
 
-      <p className="kbd-help">Keyboard: ← → navigate, +/- zoom, 0 reset, f fullscreen, esc exit</p>
+      <p className="kbd-help">Keyboard: ← → navigate, +/- zoom, 0 reset, f fullscreen, esc exit. Zoom wheel: hold Ctrl + wheel.</p>
     </section>
   )
 }
