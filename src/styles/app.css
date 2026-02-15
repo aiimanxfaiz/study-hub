@@ -240,6 +240,10 @@ select:focus-visible {
   overflow: auto;
 }
 
+.viewer-main.continuous-active {
+  grid-template-columns: 1fr;
+}
+
 .viewer-main:fullscreen {
   height: 100vh;
   padding: 0.75rem;
@@ -315,6 +319,12 @@ select:focus-visible {
   gap: 0.8rem;
   max-height: 75vh;
   overflow-y: auto;
+}
+
+.continuous-list .continuous-item img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .image-skeleton {

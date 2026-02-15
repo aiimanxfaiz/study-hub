@@ -87,6 +87,16 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     return { width: 'auto', maxWidth: '100%', height: 'auto', maxHeight: targetHeight }
   }, [fitMode, isFullscreen])
 
+  const continuousFitStyle = useMemo(
+    () => ({
+      width: '100%',
+      height: 'auto',
+      maxHeight: 'none',
+      maxWidth: '100%',
+    }),
+    [],
+  )
+
   function toAssetUrl(src: string) {
     const encodedPath = src
       .split('/')
@@ -147,7 +157,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
         </span>
       </div>
 
-      <div className="viewer-main" ref={frameRef} tabIndex={-1}>
+      <div className={`viewer-main ${continuous ? 'continuous-active' : ''}`} ref={frameRef} tabIndex={-1}>
         {continuous ? (
           <div className="continuous-list">
             {images.map((entry) => {
@@ -164,7 +174,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
                     loading="lazy"
                     onError={() => setMissing((prev) => ({ ...prev, [entry.src]: true }))}
                     onLoad={() => setLoaded((prev) => ({ ...prev, [entry.src]: true }))}
-                    style={fitStyle}
+                    style={continuousFitStyle}
                   />
                   {isMissing ? <span className="missing-badge">missing file</span> : null}
                 </figure>
@@ -202,19 +212,21 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
           </TransformWrapper>
         )}
 
-        <aside className="thumb-rail" aria-label="Page thumbnails">
-          {images.map((thumb, idx) => (
-            <button
-              key={thumb.src}
-              className={`thumb-btn ${idx === pageIndex ? 'active' : ''}`}
-              type="button"
-              onClick={() => setPageIndex(idx)}
-            >
-              <img src={toAssetUrl(thumb.src)} alt={`Page ${idx + 1}`} loading="lazy" />
-              <span>{idx + 1}</span>
-            </button>
-          ))}
-        </aside>
+        {!continuous ? (
+          <aside className="thumb-rail" aria-label="Page thumbnails">
+            {images.map((thumb, idx) => (
+              <button
+                key={thumb.src}
+                className={`thumb-btn ${idx === pageIndex ? 'active' : ''}`}
+                type="button"
+                onClick={() => setPageIndex(idx)}
+              >
+                <img src={toAssetUrl(thumb.src)} alt={`Page ${idx + 1}`} loading="lazy" />
+                <span>{idx + 1}</span>
+              </button>
+            ))}
+          </aside>
+        ) : null}
       </div>
 
       <p className="kbd-help">Keyboard: ← → navigate, +/- zoom, 0 reset, f fullscreen, esc exit. Zoom wheel: hold Ctrl + wheel.</p>
