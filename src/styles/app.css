@@ -260,7 +260,9 @@ select:focus-visible {
 }
 
 .viewer-main:fullscreen:not(.continuous-active) {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 .viewer-main:fullscreen .thumb-rail {
