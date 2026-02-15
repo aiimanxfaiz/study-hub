@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-02-15T05:39:19.619Z",
+  "subjectCount": 17,
+  "materialCount": 301,
+  "imageCount": 3097,
+  "subjects": [
+    {
+      "id": "math-1",
+      "code": "Math 1",
+      "name": "PMT 0101",
+      "counts": {
+        "lecture": 24,
+        "notes": 6,
+        "other": 6
+      }
+    },
+    {
+      "id": "math-2",
+      "code": "Math 2",
+      "name": "PMT 0201",
+      "counts": {
+        "lecture": 16,
+        "tutorial": 5,
+        "notes": 4,
+        "other": 2
+      }
+    },
+    {
+      "id": "math-3",
+      "code": "Math 3",
+      "name": "PMT 0301",
+      "counts": {
+        "lecture": 6,
+        "notes": 6,
+        "other": 1
+      }
+    },
+    {
+      "id": "pds",
+      "code": "PDS",
+      "name": "PDS",
+      "counts": {
+        "tutorial": 9,
+        "exam": 5
+      }
+    },
+    {
+      "id": "ppp",
+      "code": "PPP",
+      "name": "PPP",
+      "counts": {
+        "tutorial": 7,
+        "exam": 6
+      }
+    },
+    {
+      "id": "tcp-2101",
+      "code": "TCP 2101",
+      "name": "TCP 2101",
+      "counts": {
+        "exam": 10
+      }
+    },
+    {
+      "id": "tcs-3351",
+      "code": "TCS 3351",
+      "name": "TCS 3351",
+      "counts": {
+        "lecture": 9
+      }
+    },
+    {
+      "id": "tds-2201",
+      "code": "TDS 2201",
+      "name": "TDS 2201",
+      "counts": {
+        "exam": 6,
+        "notes": 1,
+        "lab": 5
+      }
+    },
+    {
+      "id": "tds-3301",
+      "code": "TDS 3301",
+      "name": "TDS 3301",
+      "counts": {
+        "lecture": 3,
+        "exam": 7
+      }
+    },
+    {
+      "id": "tds-3851",
+      "code": "TDS 3851",
+      "name": "TDS 3851",
+      "counts": {
+        "lecture": 4,
+        "test": 2,
+        "notes": 1,
+        "quiz": 1
+      }
+    },
+    {
+      "id": "tma-1101",
+      "code": "TMA 1101",
+      "name": "TMA 1101",
+      "counts": {
+        "lecture": 9,
+        "exam": 12,
+        "notes": 1
+      }
+    },
+    {
+      "id": "tma-1201",
+      "code": "TMA 1201",
+      "name": "TMA 1201",
+      "counts": {
+        "lecture": 9,
+        "exam": 14,
+        "notes": 1
+      }
+    },
+    {
+      "id": "tma-1301",
+      "code": "TMA 1301",
+      "name": "TMA 1301",
+      "counts": {
+        "lecture": 6,
+        "exam": 8,
+        "notes": 5
+      }
+    },
+    {
+      "id": "tse-2101",
+      "code": "TSE 2101",
+      "name": "TSE 2101",
+      "counts": {
+        "lecture": 6,
+        "exam": 8
+      }
+    },
+    {
+      "id": "tsn-1101",
+      "code": "TSN 1101",
+      "name": "TSN 1101",
+      "counts": {
+        "lecture": 7,
+        "exam": 11
+      }
+    },
+    {
+      "id": "tsn-2101",
+      "code": "TSN 2101",
+      "name": "TSN 2101",
+      "counts": {
+        "lecture": 10,
+        "test": 12,
+        "exam": 8,
+        "notes": 4
+      }
+    },
+    {
+      "id": "tsn-2201",
+      "code": "TSN 2201",
+      "name": "TSN 2201",
+      "counts": {
+        "test": 4,
+        "exam": 14
+      }
+    }
+  ]
+}
