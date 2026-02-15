@@ -15,6 +15,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
   const [fitMode, setFitMode] = useState<FitMode>('contain')
   const [missing, setMissing] = useState<Record<string, boolean>>({})
   const [loaded, setLoaded] = useState<Record<string, boolean>>({})
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const frameRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<ReactZoomPanPinchRef | null>(null)
 
@@ -63,7 +64,9 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
 
   useEffect(() => {
     const onFullscreenChange = () => {
-      if (document.fullscreenElement === frameRef.current) {
+      const active = document.fullscreenElement === frameRef.current
+      setIsFullscreen(active)
+      if (active) {
         frameRef.current?.focus()
       }
     }
@@ -73,14 +76,16 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
   }, [])
 
   const fitStyle = useMemo(() => {
+    const targetHeight = isFullscreen ? 'calc(100vh - 2rem)' : '75vh'
+
     if (fitMode === 'width') {
       return { width: '100%', height: 'auto' }
     }
     if (fitMode === 'height') {
-      return { width: 'auto', height: '75vh' }
+      return { width: 'auto', height: targetHeight }
     }
-    return { width: 'auto', maxWidth: '100%', height: 'auto', maxHeight: '75vh' }
-  }, [fitMode])
+    return { width: 'auto', maxWidth: '100%', height: 'auto', maxHeight: targetHeight }
+  }, [fitMode, isFullscreen])
 
   function toAssetUrl(src: string) {
     const encodedPath = src
@@ -176,7 +181,7 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
             wheel={{ activationKeys: ['Control'] }}
           >
             <TransformComponent
-              wrapperStyle={{ width: '100%', minHeight: '70vh' }}
+              wrapperStyle={{ width: '100%', minHeight: isFullscreen ? 'calc(100vh - 1.5rem)' : '70vh' }}
               contentStyle={{ width: '100%', display: 'flex', justifyContent: 'center' }}
             >
               <figure className="viewer-image-wrap">

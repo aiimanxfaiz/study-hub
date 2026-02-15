@@ -240,6 +240,21 @@ select:focus-visible {
   overflow: auto;
 }
 
+.viewer-main:fullscreen {
+  height: 100vh;
+  padding: 0.75rem;
+  background: #000;
+  align-items: start;
+}
+
+.viewer-main:fullscreen .thumb-rail {
+  max-height: calc(100vh - 1.5rem);
+}
+
+.viewer-main:fullscreen .continuous-list {
+  max-height: calc(100vh - 1.5rem);
+}
+
 .viewer-image-wrap,
 .continuous-item {
   margin: 0;
