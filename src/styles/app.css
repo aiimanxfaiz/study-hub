@@ -259,6 +259,10 @@ select:focus-visible {
   cursor: grabbing;
 }
 
+.viewer-main:fullscreen:not(.continuous-active) {
+  overflow: hidden;
+}
+
 .viewer-main:fullscreen .thumb-rail {
   max-height: calc(100vh - 1.5rem);
 }
@@ -430,6 +434,10 @@ select:focus-visible {
     gap: 0.8rem;
     padding: 0 0 calc(env(safe-area-inset-bottom) + 0.75rem);
     align-items: flex-end;
+  }
+
+  .viewer-main:fullscreen:not(.continuous-active) .thumb-rail {
+    display: none;
   }
 
   .viewer-main:fullscreen .fullscreen-nav-btn {
