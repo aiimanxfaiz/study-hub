@@ -12,7 +12,7 @@ type FitMode = 'contain' | 'width' | 'height'
 export function MaterialViewer({ title, images }: MaterialViewerProps) {
   const [pageIndex, setPageIndex] = useState(0)
   const [continuous, setContinuous] = useState(false)
-  const [fitMode, setFitMode] = useState<FitMode>('contain')
+  const [fitMode, setFitMode] = useState<FitMode>('width')
   const [missing, setMissing] = useState<Record<string, boolean>>({})
   const [loaded, setLoaded] = useState<Record<string, boolean>>({})
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -101,6 +101,15 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (continuous) return
+    if (isMobileViewport || isFullscreen) {
+      setFitMode('width')
+      return
+    }
+    setFitMode('contain')
+  }, [isMobileViewport, isFullscreen, continuous])
 
   useEffect(() => {
     const onFullscreenChange = () => {
