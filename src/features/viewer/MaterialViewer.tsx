@@ -143,6 +143,12 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     [],
   )
 
+  function applyAutoFitTransform() {
+    if (continuous) return
+    wrapperRef.current?.resetTransform(0)
+    wrapperRef.current?.centerView(1, 0)
+  }
+
   function toAssetUrl(src: string) {
     const encodedPath = src
       .split('/')
@@ -159,6 +165,14 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
     }
     frameRef.current.requestFullscreen().catch(() => undefined)
   }
+
+  useEffect(() => {
+    if (continuous) return
+    const id = requestAnimationFrame(() => {
+      applyAutoFitTransform()
+    })
+    return () => cancelAnimationFrame(id)
+  }, [pageIndex, fitMode, isFullscreen, continuous])
 
   function showNavTemporarily() {
     if (!(isFullscreen && !continuous)) return
@@ -331,7 +345,10 @@ export function MaterialViewer({ title, images }: MaterialViewerProps) {
                   alt={image.alt}
                   loading="lazy"
                   onError={() => setMissing((prev) => ({ ...prev, [image.src]: true }))}
-                  onLoad={() => setLoaded((prev) => ({ ...prev, [image.src]: true }))}
+                  onLoad={() => {
+                    setLoaded((prev) => ({ ...prev, [image.src]: true }))
+                    applyAutoFitTransform()
+                  }}
                   style={fitStyle}
                 />
                 {missing[image.src] ? <span className="missing-badge">missing file</span> : null}
